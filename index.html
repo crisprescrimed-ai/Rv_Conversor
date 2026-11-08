@@ -230,30 +230,6 @@
       font-size: 14px;
       font-weight: 600;
     }
-    .step-document { gap: 8px; padding-right: 11px; }
-    .step-document-label { min-width: 0; flex: 1; }
-    .step-action {
-      display: inline-flex;
-      min-height: 35px;
-      flex: 0 0 auto;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 6px 9px;
-      border: 1px solid #c5ddec;
-      border-radius: 10px;
-      background: #f0f8fc;
-      color: var(--blue);
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 700;
-      white-space: nowrap;
-      transition: border-color .16s ease, background .16s ease, transform .16s ease;
-    }
-    .step-action svg { flex: 0 0 auto; }
-    .step-action:hover:not(:disabled) { transform: translateY(-1px); border-color: #8fc5dc; background: #e4f4fa; }
-    .step-action:focus-visible { outline: 3px solid rgba(49,197,213,.38); outline-offset: 2px; }
-    .step-action:disabled { cursor: not-allowed; opacity: .45; }
     .step-number {
       display: grid;
       width: 31px;
@@ -266,8 +242,6 @@
       font-size: 13px;
       font-weight: 800;
     }
-    .step.is-complete { border-color: #bcebd7; color: #24654f; }
-    .step.is-complete .step-number { background: #dff7ec; color: #178358; }
     .workspace { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start; }
     .sidebar { position: sticky; top: 18px; }
     .panel, .card {
@@ -290,31 +264,6 @@
     }
     .panel h2, .card h2 { margin: 0; color: var(--navy); font: 800 18px/1.4 "Manrope", sans-serif; letter-spacing: -.025em; }
     .panel .muted, .card .muted { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
-    .upload {
-      margin-top: 13px;
-      padding: 14px;
-      border: 1px dashed #bbcad9;
-      border-radius: 13px;
-      background: #f9fbfd;
-      transition: border-color .2s, background .2s;
-    }
-    .upload:focus-within { border-color: var(--cyan); background: #f2fbfc; }
-    .upload-title { display: flex; align-items: center; gap: 9px; color: var(--ink); font-size: 14px; font-weight: 700; }
-    .upload-number {
-      display: grid;
-      width: 23px;
-      height: 23px;
-      flex: 0 0 23px;
-      place-items: center;
-      border-radius: 8px;
-      background: #e7f2f8;
-      color: var(--blue);
-      font-size: 12px;
-      font-weight: 800;
-    }
-    .upload small { display: block; margin: 5px 0 9px 32px; color: var(--muted); font-size: 12px; line-height: 1.5; }
-    .upload input[type="file"] { width: 100%; color: #40536a; font-size: 12px; }
-    .file-name { overflow: hidden; margin: 7px 0 0 32px; color: #13754f; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
     .template-list { display: grid; gap: 8px; margin-top: 14px; padding: 13px; border: 1px solid #dce8f1; border-radius: 12px; background: #f3f8fc; }
     .template-list strong { color: var(--navy); font-size: 13px; }
     .template-list a { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--blue); font-size: 12px; font-weight: 700; text-decoration: none; }
@@ -385,10 +334,6 @@
     .btn-green { background: #15845a; }
     .btn-green:hover:not(:disabled) { box-shadow: 0 7px 15px rgba(21,132,90,.2); }
     .btn-dark { background: var(--navy); }
-    .ocr-button { margin-top: 13px; }
-    .status { min-height: 38px; margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
-    .status.is-error { color: #b13b32; }
-    .status.is-success { color: #178358; }
     .note {
       padding: 12px 13px;
       border: 1px solid #f0dfb2;
@@ -398,10 +343,8 @@
       font-size: 13px;
       line-height: 1.55;
     }
-    .privacy-note { margin-top: 7px; }
+    .privacy-note { margin-top: 14px; }
     .side-actions { display: grid; gap: 9px; margin-top: 15px; }
-    .checkboxline { display: flex; align-items: flex-start; gap: 8px; margin-top: 13px; color: #4d5e73; font-size: 13px; line-height: 1.5; }
-    .checkboxline input { width: 15px; height: 15px; flex: 0 0 15px; margin: 1px 0 0; accent-color: var(--blue); }
 
     .content { display: grid; gap: 17px; min-width: 0; }
     .card { padding: 22px 24px; }
@@ -503,9 +446,6 @@
     }
     @media (max-width: 760px) {
       .shell { width: min(100% - 32px, 620px); }
-      .step-document { gap: 6px; padding: 10px 9px; }
-      .step-action { width: 32px; min-height: 32px; flex-basis: 32px; padding: 0; }
-      .step-action-label { display: none; }
       .topbar { min-height: 72px; }
       .hero-main { grid-template-columns: 1fr; gap: 22px; padding-block: 34px 30px; }
       .hero-card { max-width: 360px; }
@@ -584,7 +524,7 @@
           </div>
         </div>
         <div class="topbar-actions">
-          <div class="privacy-pill" title="Seus arquivos ficam no navegador">
+          <div class="privacy-pill" title="Os dados são processados no navegador">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5 6v5c0 4.7 3 8.3 7 10 4-1.7 7-5.3 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Processamento local
           </div>
@@ -598,7 +538,7 @@
         <div>
           <div class="eyebrow">Cadastro sem complicação</div>
           <h1>Central de documentos<br>do cliente.</h1>
-          <p class="hero-copy">Organize os arquivos, preencha os dados com segurança e gere os documentos prontos para conferência e assinatura.</p>
+          <p class="hero-copy">Preencha os dados diretamente no site e gere os documentos para conferência e assinatura.</p>
         </div>
         <div class="hero-card" aria-live="polite">
           <div class="hero-card-label">Progresso do cadastro</div>
@@ -612,17 +552,10 @@
 
   <main class="shell">
     <div class="steps" aria-label="Etapas do processo">
-      <div class="step"><span class="step-number">01</span><span>Enviar RG ou CNH</span></div>
-      <div class="step step-document">
-        <span class="step-number">02</span>
-        <span class="step-document-label">Comprovante de residência</span>
-        <button class="step-action" id="quickFillBtn" type="button" aria-label="Preencher cadastro a partir dos documentos selecionados" aria-describedby="ocrStatus" title="Preencher cadastro a partir dos documentos" disabled>
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3m8 0h3a1 1 0 0 1 1 1v3m0 8v3a1 1 0 0 1-1 1h-3m-8 0H5a1 1 0 0 1-1-1v-3M8 9h8v6H8zM10 11h4m-4 2h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="step-action-label">Atualizar</span>
-        </button>
-      </div>
-      <div class="step"><span class="step-number">03</span><span>Conferir cadastro</span></div>
-      <div class="step"><span class="step-number">04</span><span>Gerar os 2 PDFs</span></div>
+      <div class="step"><span class="step-number">01</span><span>Preencher cadastro</span></div>
+      <div class="step"><span class="step-number">02</span><span>Completar declaração</span></div>
+      <div class="step"><span class="step-number">03</span><span>Gerar os 2 PDFs</span></div>
+      <div class="step"><span class="step-number">04</span><span>Conferir e baixar</span></div>
     </div>
 
     <div class="workspace">
@@ -630,22 +563,9 @@
         <div class="panel">
           <div class="panel-heading">
             <div class="panel-icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0L8 8m4-4 4 4M5 14v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 3h8l4 4v13H6V3Zm8 0v5h4M9 12h6m-6 4h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <div><h2>Documentos do cliente</h2><p class="muted">Anexe somente o documento de identificação e o comprovante de residência.</p></div>
-          </div>
-
-          <div class="upload">
-            <div class="upload-title"><span class="upload-number">01</span>CNH ou RG</div>
-            <small>Envie uma imagem ou PDF legível do documento.</small>
-            <input id="idFile" type="file" accept=".pdf,image/*" aria-label="Selecionar CNH ou RG">
-            <div class="file-name" id="idName" aria-live="polite">Nenhum arquivo selecionado</div>
-          </div>
-          <div class="upload">
-            <div class="upload-title"><span class="upload-number">02</span>Comprovante de residência</div>
-            <small>Envie uma imagem ou PDF legível.</small>
-            <input id="addressFile" type="file" accept=".pdf,image/*" aria-label="Selecionar comprovante de residência">
-            <div class="file-name" id="addressName" aria-live="polite">Nenhum arquivo selecionado</div>
+            <div><h2>Gerar documentos</h2><p class="muted">Preencha os dados no formulário. Os modelos padrão serão usados automaticamente.</p></div>
           </div>
 
           <div class="template-list" aria-label="Modelos padrão incluídos no site">
@@ -658,12 +578,7 @@
             </a>
           </div>
 
-          <button class="btn btn-secondary btn-full ocr-button" id="readBtn" type="button" disabled>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3m8 0h3a1 1 0 0 1 1 1v3m0 8v3a1 1 0 0 1-1 1h-3m-8 0H5a1 1 0 0 1-1-1v-3M8 9h8v6H8z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Preencher dados dos anexos
-          </button>
-          <p class="status" id="ocrStatus" role="status">A leitura automática é uma ajuda. Revise todos os campos antes de gerar.</p>
-          <div class="note privacy-note">Privacidade: os arquivos são processados no navegador e não são enviados a um servidor. Evite computadores públicos e feche a página ao concluir.</div>
+          <div class="note privacy-note">Privacidade: os dados preenchidos e os PDFs gerados são processados no navegador. Evite computadores públicos e feche a página ao concluir.</div>
           <div class="side-actions">
             <button class="btn btn-green btn-full" id="pdfBtn" type="button">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M5 16v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -796,7 +711,7 @@
             <div class="review-icon" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3 2.8 19h18.4L12 3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9v4m0 3h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </div>
-            <div><h2>Conferência final</h2><p>Antes de gerar os dois PDFs, confira nome, CPF, RG, endereço, CEP e demais informações com os documentos apresentados pelo cliente. A leitura OCR pode cometer erros, especialmente em números, datas e abreviações. A confirmação humana é obrigatória.</p></div>
+            <div><h2>Conferência final</h2><p>Antes de gerar os dois PDFs, confira nome, CPF, RG, endereço, CEP e demais informações com os documentos apresentados pelo cliente. Revise os documentos preenchidos antes de baixá-los e assiná-los.</p></div>
           </div>
         </div>
       </section>
@@ -813,7 +728,7 @@
       <button class="install-close" id="closeInstallDialog" type="button" aria-label="Fechar instruções">&times;</button>
     </div>
     <ol class="install-steps" id="installSteps"></ol>
-    <p class="install-dialog-note">A instalação exige que o site esteja publicado em uma conexão segura (HTTPS). Para ler documentos e gerar PDFs, mantenha acesso à internet.</p>
+    <p class="install-dialog-note">A instalação exige que o site esteja publicado em uma conexão segura (HTTPS). Para gerar e visualizar os PDFs, mantenha acesso à internet.</p>
     <button class="btn btn-dark install-dialog-action" id="installDialogAction" type="button">Entendi</button>
   </dialog>
   <dialog class="pdf-preview-dialog" id="pdfPreviewDialog" aria-labelledby="pdfPreviewTitle" aria-describedby="pdfPreviewDescription">
@@ -841,8 +756,6 @@
   </dialog>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
   <script>
     const $ = (selector) => document.querySelector(selector);
@@ -872,21 +785,9 @@
       $("#completionValue").textContent = percent;
       $("#completionCount").textContent = `${filled} de ${fields.length} campos preenchidos`;
       $("#progressFill").style.width = `${percent}%`;
-      document.querySelectorAll(".step").forEach((step, index) => {
-        step.classList.toggle("is-complete", percent > 0 && (index === 0 || (index === 1 && filled >= 3) || (index === 2 && percent >= 60) || (index === 3 && percent === 100)));
-      });
     }
     fields.forEach((field) => field.addEventListener("input", updateProgress));
     fields.forEach((field) => field.addEventListener("change", updateProgress));
-
-    [["idFile", "idName"], ["addressFile", "addressName"]].forEach(([inputId, labelId]) => {
-      $(`#${inputId}`).addEventListener("change", (event) => {
-        $(`#${labelId}`).textContent = event.target.files[0]?.name || "Nenhum arquivo selecionado";
-        const hasFiles = ["idFile", "addressFile"].some((id) => $(`#${id}`).files.length > 0);
-        $("#readBtn").disabled = !hasFiles;
-        $("#quickFillBtn").disabled = !hasFiles;
-      });
-    });
 
     function copyPairs(pairs) {
       pairs.forEach(([target, source]) => set(target, val(source)));
@@ -904,283 +805,6 @@
       return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR")
         .replace(/[^a-z0-9]+/g, " ").trim().replace(/\s+/g, " ");
     }
-
-    const fieldLabels = {
-      razao: ["razao social", "nome do estabelecimento"],
-      tipoEst: ["tipo de estabelecimento", "tipo estabelecimento", "estabelecimento"],
-      ramo: ["ramo de atividade", "atividade economica", "ramo"],
-      faturamento: ["faturamento mensal", "faturamento"],
-      ticket: ["ticket medio"],
-      endEmpresa: ["endereco do estabelecimento", "endereco comercial"],
-      numEmpresa: ["numero do estabelecimento", "numero comercial", "numero"],
-      compEmpresa: ["complemento do estabelecimento", "complemento comercial", "complemento"],
-      cepEmpresa: ["cep do estabelecimento", "cep comercial", "cep"],
-      bairroEmpresa: ["bairro do estabelecimento", "bairro comercial", "bairro"],
-      cidadeEmpresa: ["cidade do estabelecimento", "municipio do estabelecimento", "cidade comercial", "cidade"],
-      estadoEmpresa: ["estado do estabelecimento", "uf do estabelecimento", "estado comercial", "uf", "estado"],
-      emailEmpresa: ["email do estabelecimento", "email comercial", "e mail comercial", "email", "e mail"],
-      telEmpresa: ["telefone do estabelecimento", "telefone comercial", "celular comercial", "telefone"],
-      dataEmpresa: ["data de inauguracao", "data de abertura", "data pf nascimento pj inauguracao"],
-      nome: ["nome e sobrenome", "nome completo", "nome do responsavel", "responsavel legal", "nome"],
-      cpf: ["cpf", "cpf do responsavel"],
-      rg: ["doc identidade", "rg", "rg do responsavel", "numero do rg", "identidade", "registro geral"],
-      nascResp: ["data local e uf de nascimento", "local e uf de nascimento", "data de nascimento", "data nascimento", "nascimento"],
-      endResp: ["endereco residencial", "endereco do responsavel", "logradouro", "endereco"],
-      numResp: ["numero residencial", "numero da residencia", "numero"],
-      compResp: ["complemento residencial", "complemento"],
-      cepResp: ["cep residencial", "cep do responsavel", "cep"],
-      bairroResp: ["bairro residencial", "bairro"],
-      cidadeResp: ["municipio", "cidade"],
-      estadoResp: ["uf", "estado"],
-      telResp: ["telefone do responsavel", "celular do responsavel", "telefone pessoal"],
-      segmento: ["segmento", "codigo de atividade"],
-      tabela: ["tabela", "tabela de recebimento"],
-      tpv: ["tpv", "volume mensal"],
-      maquina: ["tipo de maquina", "modelo da maquina"],
-      qtdMaquina: ["quantidade de maquinas", "quantidade"],
-      aluguel: ["valor do aluguel", "aluguel"],
-      prazo: ["condicao", "prazo", "isencao"],
-      portador: ["nome do portador", "titular da conta", "titular"],
-      cnpj: ["cnpj"],
-      cpfBanco: ["cpf do titular", "cpf do portador"],
-      banco: ["banco"],
-      agencia: ["agencia"],
-      conta: ["conta bancaria", "numero da conta"],
-      tipoConta: ["tipo de conta"],
-      operadora: ["operadora"],
-      declNome: ["nome do declarante"],
-      declRg: ["rg do declarante", "identidade do declarante"],
-      emissaoRg: ["data de emissao do rg", "data de emissao", "data emissao", "emissao"],
-      orgao: ["doc identidade org emissor", "orgao expedidor", "orgao emissor", "org emissor"],
-      declEndereco: ["endereco residencial", "endereco do declarante", "logradouro", "endereco"],
-      declNumero: ["numero residencial", "numero da residencia", "numero"],
-      declComp: ["complemento residencial", "complemento"],
-      declBairro: ["bairro residencial", "bairro"],
-      declCidade: ["municipio", "cidade"],
-      declCep: ["cep residencial", "cep do responsavel"],
-      localAss: ["cidade da assinatura", "local da assinatura"],
-      dataAss: ["data da assinatura"]
-    };
-    const knownLabels = [...new Set(Object.values(fieldLabels).flat().map(normalizeLabel))];
-
-    function readLabeledValue(text, labels) {
-      const lines = text.split(/\r?\n/);
-      for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-        const rawLine = lines[lineIndex];
-        const line = rawLine.trim();
-        if (!line) continue;
-        const normalizedLine = normalizeLabel(line);
-        for (const label of labels.map(normalizeLabel).sort((a, b) => b.length - a.length)) {
-          const labelStart = normalizedLine.indexOf(label);
-          if (labelStart < 0) continue;
-          const prefix = normalizedLine.slice(0, labelStart).trim();
-          const isFieldNumber = prefix.length <= 12 && /\d/.test(prefix) && /^[a-z0-9 ]+$/.test(prefix);
-          if (prefix && !isFieldNumber) continue;
-          const nextCharacter = normalizedLine[labelStart + label.length];
-          if (nextCharacter && nextCharacter !== " " && nextCharacter !== ":") continue;
-          const longerLabelMatches = knownLabels.some((knownLabel) => (
-            knownLabel.length > label.length
-            && knownLabel.startsWith(`${label} `)
-            && normalizedLine.startsWith(knownLabel, labelStart)
-          ));
-          if (longerLabelMatches) continue;
-
-          let hasPrefixCharacter = false;
-          let previousCharacterWasSeparator = false;
-          const originalOffsets = [];
-          for (let characterIndex = 0; characterIndex < line.length; characterIndex++) {
-            const characters = line[characterIndex].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
-            for (const character of characters) {
-              if (/[a-z0-9]/.test(character)) {
-                hasPrefixCharacter = true;
-                previousCharacterWasSeparator = false;
-                originalOffsets.push(characterIndex);
-              } else if (hasPrefixCharacter && !previousCharacterWasSeparator) {
-                previousCharacterWasSeparator = true;
-                originalOffsets.push(characterIndex);
-              }
-            }
-          }
-          if (!originalOffsets.length) continue;
-          const valueStart = originalOffsets[labelStart + label.length - 1] + 1;
-          const value = line.slice(valueStart).replace(/^[\s:./–—-]+/, "").trim();
-          const isAnotherLabel = new RegExp(
-            `^(?:${knownLabels.map((knownLabel) => knownLabel.replace(/ /g, "\\s+")).join("|")})(?:\\s|:)`,
-            "i"
-          ).test(normalizeLabel(value));
-          if (value && !isAnotherLabel) {
-            return value.slice(0, 140);
-          }
-          const followingLine = lines.slice(lineIndex + 1).find((candidate) => candidate.trim());
-          if (followingLine && !knownLabels.some((knownLabel) => {
-            const normalizedFollowing = normalizeLabel(followingLine);
-            return normalizedFollowing.startsWith(`${knownLabel} `) || normalizedFollowing.startsWith(`${knownLabel}:`);
-          })) return followingLine.trim().slice(0, 140);
-        }
-      }
-      return "";
-    }
-
-    function addSuggestions(suggestions, text, keys) {
-      keys.forEach((key) => {
-        const value = readLabeledValue(text, fieldLabels[key] || []);
-        if (value) suggestions.set(key, value);
-      });
-    }
-
-    function extractDocumentSuggestions({ formText, idText, addressText }) {
-      const suggestions = new Map();
-      addSuggestions(suggestions, formText, [
-        "razao", "tipoEst", "ramo", "faturamento", "ticket", "endEmpresa", "numEmpresa",
-        "compEmpresa", "cepEmpresa", "bairroEmpresa", "cidadeEmpresa", "estadoEmpresa",
-        "emailEmpresa", "telEmpresa", "dataEmpresa", "nome", "cpf", "rg", "nascResp",
-        "segmento", "tabela", "tpv", "maquina", "qtdMaquina", "aluguel", "prazo",
-        "portador", "cnpj", "cpfBanco", "banco", "agencia", "conta", "tipoConta", "operadora"
-      ]);
-      addSuggestions(suggestions, idText, ["nome", "cpf", "rg", "nascResp", "emissaoRg", "orgao"]);
-      addSuggestions(suggestions, addressText, [
-        "endResp", "numResp", "compResp", "cepResp", "bairroResp", "cidadeResp",
-        "estadoResp", "telResp", "declEndereco", "declNumero", "declComp", "declBairro", "declCidade", "declCep"
-      ]);
-
-      const cpf = idText.match(/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/) || formText.match(/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/);
-      const cep = addressText.match(/\b\d{5}-?\d{3}\b/);
-      const rg = idText.match(/(?:DOC\.?\s*IDENTIDADE|RG|IDENTIDADE|REGISTRO\s+GERAL)\s*[:nº.]?\s*([0-9.\/-]{5,15})/i);
-      const email = formText.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i);
-      if (cpf) suggestions.set("cpf", cpf[0]);
-      if (cep) {
-        suggestions.set("cepResp", readLabeledValue(addressText, fieldLabels.cepResp) || cep[0]);
-        suggestions.set("declCep", readLabeledValue(addressText, fieldLabels.declCep) || cep[0]);
-      }
-      if (rg) {
-        suggestions.set("rg", rg[1]);
-        suggestions.set("declRg", rg[1]);
-      }
-      const identityNumber = idText.match(/(?:DOC\.?\s*IDENTIDADE|RG|REGISTRO\s+GERAL)[^\r\n]*(?:\r?\n\s*)?([0-9][0-9./-]{4,14})/i);
-      if (identityNumber) {
-        suggestions.set("rg", identityNumber[1]);
-        suggestions.set("declRg", identityNumber[1]);
-      }
-      const datePattern = /\b\d{2}[./-]\d{2}[./-]\d{4}\b/;
-      const labeledDate = (text, terms) => {
-        const lines = text.split(/\r?\n/);
-        const index = lines.findIndex((line) => terms.some((term) => normalizeLabel(line).includes(normalizeLabel(term))));
-        if (index < 0) return "";
-        for (const line of lines.slice(index, index + 3)) {
-          const match = line.match(datePattern);
-          if (match) return match[0].replace(/[.-]/g, "/");
-        }
-        return "";
-      };
-      const birthDate = labeledDate(idText, ["nascimento"]);
-      if (birthDate) suggestions.set("nascResp", birthDate);
-      const issueDate = labeledDate(idText, ["data emissao", "emissao"]);
-      if (issueDate) suggestions.set("emissaoRg", issueDate);
-      if (email) suggestions.set("emailEmpresa", email[0]);
-      const personName = suggestions.get("nome");
-      if (personName && !suggestions.has("declNome")) suggestions.set("declNome", personName);
-      return suggestions;
-    }
-
-    async function fileText(file, onProgress = () => {}) {
-      if (!file) return "";
-      const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
-      if (isPdf && window.pdfjsLib) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-        const buffer = await file.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
-        let output = "";
-        const pageCount = Math.min(pdf.numPages, 5);
-        for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
-          onProgress(pageNumber, pageCount, pdf.numPages);
-          const page = await pdf.getPage(pageNumber);
-          const textContent = await page.getTextContent();
-          const rows = new Map();
-          textContent.items.forEach((item) => {
-            if (!item.str.trim()) return;
-            const row = Math.round(item.transform?.[5] || 0);
-            rows.set(row, [...(rows.get(row) || []), item.str]);
-          });
-          const pageText = [...rows.entries()]
-            .sort(([firstRow], [secondRow]) => secondRow - firstRow)
-            .map(([, row]) => row.join(" "))
-            .join("\n");
-          if (pageText.trim().length >= 20) {
-            output += `\n${pageText}`;
-            continue;
-          }
-          if (!window.Tesseract) throw new Error("Biblioteca de OCR indisponível para ler o PDF digitalizado.");
-          const canvas = document.createElement("canvas");
-          const viewport = page.getViewport({ scale: 1.8 });
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
-          const context = canvas.getContext("2d");
-          if (!context) throw new Error("Não foi possível preparar uma página do PDF para leitura.");
-          await page.render({ canvasContext: context, viewport }).promise;
-          const result = await Tesseract.recognize(canvas, "por");
-          output += `\n${result.data.text}`;
-        }
-        return output;
-      }
-      if (file.type.startsWith("image/")) {
-        if (!window.Tesseract) throw new Error("Biblioteca de OCR indisponível.");
-        const result = await Tesseract.recognize(file, "por");
-        return result.data.text;
-      }
-      throw new Error(`Não foi possível ler "${file.name}". Use um PDF, JPG ou PNG e verifique se as bibliotecas foram carregadas.`);
-    }
-
-    async function fillFromDocuments() {
-      const buttons = [$("#readBtn"), $("#quickFillBtn")];
-      const status = $("#ocrStatus");
-      const files = [
-        ["CNH / RG", $("#idFile").files[0]],
-        ["Comprovante de residência", $("#addressFile").files[0]]
-      ].filter(([, file]) => file);
-      status.className = "status";
-      if (!files.length) {
-        status.textContent = "Anexe a CNH ou o RG e/ou o comprovante de residência para preencher o cadastro.";
-        status.classList.add("is-error");
-        return;
-      }
-      buttons.forEach((button) => { button.disabled = true; });
-      const originalMarkup = $("#readBtn").innerHTML;
-      $("#readBtn").textContent = "Lendo documentos…";
-      try {
-        const extracted = { formText: "", idText: "", addressText: "" };
-        for (const [label, file] of files) {
-          const textKey = label === "CNH / RG" ? "idText" : "addressText";
-          status.textContent = `Lendo ${label.toLocaleLowerCase("pt-BR")}…`;
-          extracted[textKey] = await fileText(file, (page, total, totalPages) => {
-            const pageLimitNotice = totalPages > total ? ` (primeiras ${total} de ${totalPages} páginas)` : "";
-            status.textContent = `Lendo ${label.toLocaleLowerCase("pt-BR")}, página ${page} de ${total}${pageLimitNotice}…`;
-          });
-        }
-        const suggestions = extractDocumentSuggestions(extracted);
-        let filledCount = 0;
-        suggestions.forEach((value, key) => {
-          if (set(key, value)) filledCount++;
-        });
-        updateProgress();
-        if (filledCount) {
-          status.textContent = `${filledCount} ${filledCount === 1 ? "campo preenchido" : "campos preenchidos"} com os anexos, sem substituir dados existentes. Confira os dados e complete o restante.`;
-          status.classList.add("is-success");
-        } else {
-          status.textContent = "Arquivos lidos, mas nenhum dado novo foi reconhecido. Confira o formato ou preencha manualmente.";
-          status.classList.add("is-error");
-        }
-      } catch (error) {
-        console.error("Falha na leitura dos documentos:", error);
-        status.textContent = `${error.message || "Não foi possível concluir a leitura."} Seus arquivos continuam apenas no navegador.`;
-        status.classList.add("is-error");
-      } finally {
-        $("#readBtn").innerHTML = originalMarkup;
-        const hasFiles = ["idFile", "addressFile"].some((id) => $(`#${id}`).files.length > 0);
-        buttons.forEach((button) => { button.disabled = !hasFiles; });
-      }
-    }
-    $("#readBtn").addEventListener("click", fillFromDocuments);
-    $("#quickFillBtn").addEventListener("click", fillFromDocuments);
 
     let toastTimer;
     function notify(message) {
@@ -1613,8 +1237,6 @@
       button.disabled = true;
       button.textContent = "Preparando os documentos…";
       $("#clearBtn").disabled = true;
-      $("#readBtn").disabled = true;
-      $("#quickFillBtn").disabled = true;
       $("#previewGeneratedBtn").disabled = true;
       try {
         const [declaration, credentialForm] = await Promise.all([
@@ -1648,19 +1270,14 @@
         button.disabled = false;
         button.textContent = originalLabel;
         $("#clearBtn").disabled = false;
-        const hasFiles = ["idFile", "addressFile"].some((id) => $(`#${id}`).files.length > 0);
-        $("#readBtn").disabled = !hasFiles;
-        $("#quickFillBtn").disabled = !hasFiles;
         $("#previewGeneratedBtn").disabled = false;
       }
     }
 
     $("#pdfBtn").addEventListener("click", generatePdf);
     $("#clearBtn").addEventListener("click", () => {
-      if (!window.confirm("Deseja limpar todos os campos e arquivos selecionados?")) return;
+      if (!window.confirm("Deseja limpar todos os campos preenchidos?")) return;
       fields.forEach((field) => { field.value = ""; });
-      ["idFile", "addressFile"].forEach((id) => { $(`#${id}`).value = ""; });
-      ["idName", "addressName"].forEach((id) => { $(`#${id}`).textContent = "Nenhum arquivo selecionado"; });
       generatedPdfs.forEach((file) => URL.revokeObjectURL(file.url));
       generatedPdfs = [];
       if (pdfPreviewDialog.open) pdfPreviewDialog.close();
@@ -1669,10 +1286,6 @@
       $("#currentPdfDownload").setAttribute("aria-disabled", "true");
       $("#currentPdfDownload").tabIndex = -1;
       $("#generatedFiles").hidden = true;
-      $("#readBtn").disabled = true;
-      $("#quickFillBtn").disabled = true;
-      $("#ocrStatus").textContent = "Formulário limpo. Selecione documentos para começar.";
-      $("#ocrStatus").className = "status";
       $("#copyFeedback").textContent = "";
       updateProgress();
       notify("Formulário limpo.");

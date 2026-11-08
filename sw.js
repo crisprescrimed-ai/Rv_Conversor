@@ -1,5 +1,5 @@
 const CACHE_PREFIX = "rv-digital-pwa-";
-const CACHE_NAME = `${CACHE_PREFIX}v5`;
+const CACHE_NAME = `${CACHE_PREFIX}v6`;
 const APP_SHELL = [
   "./index.html",
   "./manifest.webmanifest",
