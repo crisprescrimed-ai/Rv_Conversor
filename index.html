@@ -5,7 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1830">
   <meta name="description" content="Central de documentos RV Digital: organize o cadastro do cliente e gere documentos para conferência e assinatura.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>RV Digital | Central de Documentos</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/rv-digital.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -95,6 +100,72 @@
       font-size: 13px;
     }
     .privacy-pill svg { color: var(--mint); }
+    .topbar-actions { display: flex; align-items: center; gap: 12px; }
+    .install-button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 13px;
+      border: 1px solid rgba(255,255,255,.26);
+      border-radius: 11px;
+      background: rgba(255,255,255,.1);
+      color: #fff;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: background .16s ease, border-color .16s ease;
+    }
+    .install-button:hover { border-color: rgba(255,255,255,.45); background: rgba(255,255,255,.17); }
+    .install-button:focus-visible, .install-close:focus-visible { outline: 3px solid rgba(49,197,213,.55); outline-offset: 3px; }
+    .install-button[hidden] { display: none; }
+    .install-dialog {
+      width: min(440px, calc(100% - 32px));
+      max-width: none;
+      padding: 27px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 24px 80px rgba(11,24,48,.25);
+      color: var(--ink);
+    }
+    .install-dialog::backdrop { background: rgba(8,19,37,.62); backdrop-filter: blur(4px); }
+    .install-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+    .install-dialog h2 { margin: 0; color: var(--navy); font: 800 21px/1.35 "Manrope", sans-serif; letter-spacing: -.03em; }
+    .install-dialog-intro { margin: 8px 0 16px; color: var(--muted); font-size: 14px; }
+    .install-close {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 21px;
+      line-height: 1;
+    }
+    .install-steps { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; counter-reset: install-step; }
+    .install-steps li { display: flex; align-items: flex-start; gap: 11px; color: #344860; font-size: 14px; line-height: 1.55; counter-increment: install-step; }
+    .install-steps li::before {
+      display: grid;
+      width: 25px;
+      height: 25px;
+      flex: 0 0 25px;
+      place-items: center;
+      border-radius: 50%;
+      background: #eaf5fb;
+      color: var(--blue);
+      content: counter(install-step);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .install-dialog-note { margin: 18px 0 0; padding: 12px 13px; border-radius: 11px; background: #f2f6fa; color: #53647a; font-size: 12px; line-height: 1.55; }
+    .install-dialog-action { width: 100%; margin-top: 16px; }
     .hero-main {
       position: relative;
       z-index: 1;
@@ -146,6 +217,7 @@
     }
     .step {
       display: flex;
+      min-width: 0;
       min-height: 68px;
       align-items: center;
       gap: 12px;
@@ -158,6 +230,30 @@
       font-size: 14px;
       font-weight: 600;
     }
+    .step-document { gap: 8px; padding-right: 11px; }
+    .step-document-label { min-width: 0; flex: 1; }
+    .step-action {
+      display: inline-flex;
+      min-height: 35px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 9px;
+      border: 1px solid #c5ddec;
+      border-radius: 10px;
+      background: #f0f8fc;
+      color: var(--blue);
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: border-color .16s ease, background .16s ease, transform .16s ease;
+    }
+    .step-action svg { flex: 0 0 auto; }
+    .step-action:hover:not(:disabled) { transform: translateY(-1px); border-color: #8fc5dc; background: #e4f4fa; }
+    .step-action:focus-visible { outline: 3px solid rgba(49,197,213,.38); outline-offset: 2px; }
+    .step-action:disabled { cursor: not-allowed; opacity: .45; }
     .step-number {
       display: grid;
       width: 31px;
@@ -363,6 +459,9 @@
     }
     @media (max-width: 760px) {
       .shell { width: min(100% - 32px, 620px); }
+      .step-document { gap: 6px; padding: 10px 9px; }
+      .step-action { width: 32px; min-height: 32px; flex-basis: 32px; padding: 0; }
+      .step-action-label { display: none; }
       .topbar { min-height: 72px; }
       .hero-main { grid-template-columns: 1fr; gap: 22px; padding-block: 34px 30px; }
       .hero-card { max-width: 360px; }
@@ -375,6 +474,9 @@
     }
     @media (max-width: 520px) {
       .shell { width: calc(100% - 28px); }
+      .topbar { gap: 10px; }
+      .topbar-actions { gap: 8px; }
+      .install-button { min-height: 40px; gap: 7px; padding: 8px 10px; font-size: 12px; }
       .privacy-pill { padding: 7px 9px; font-size: 0; }
       .privacy-pill svg { width: 17px; height: 17px; }
       .brand-mark { width: 39px; height: 39px; }
@@ -400,6 +502,11 @@
       .copy-actions { display: grid; }
       .copy-btn { justify-content: center; }
     }
+    @media (max-width: 380px) {
+      .brand-caption { letter-spacing: .07em; }
+      .install-label { display: none; }
+      .install-button { width: 42px; flex: 0 0 42px; padding: 8px; }
+    }
     @media (max-width: 360px) {
       .grid { grid-template-columns: 1fr; }
       .field.wide, .field.full { grid-column: 1; }
@@ -422,9 +529,15 @@
             <div class="brand-caption">Central de documentos</div>
           </div>
         </div>
-        <div class="privacy-pill" title="Seus arquivos ficam no navegador">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5 6v5c0 4.7 3 8.3 7 10 4-1.7 7-5.3 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Processamento local
+        <div class="topbar-actions">
+          <div class="privacy-pill" title="Seus arquivos ficam no navegador">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3 5 6v5c0 4.7 3 8.3 7 10 4-1.7 7-5.3 7-10V6l-7-3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Processamento local
+          </div>
+          <button class="install-button" id="installButton" type="button" aria-label="Instalar aplicativo RV Digital" aria-haspopup="dialog">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="install-label">Instalar app</span>
+          </button>
         </div>
       </div>
       <div class="hero-main">
@@ -446,7 +559,14 @@
   <main class="shell">
     <div class="steps" aria-label="Etapas do processo">
       <div class="step"><span class="step-number">01</span><span>Enviar ficha / formulário</span></div>
-      <div class="step"><span class="step-number">02</span><span>Enviar documentos</span></div>
+      <div class="step step-document">
+        <span class="step-number">02</span>
+        <span class="step-document-label">Enviar documentos</span>
+        <button class="step-action" id="quickFillBtn" type="button" aria-label="Preencher cadastro a partir dos documentos selecionados" aria-describedby="ocrStatus" title="Preencher cadastro a partir dos documentos" disabled>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3m8 0h3a1 1 0 0 1 1 1v3m0 8v3a1 1 0 0 1-1 1h-3m-8 0H5a1 1 0 0 1-1-1v-3M8 9h8v6H8zM10 11h4m-4 2h3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="step-action-label">Atualizar</span>
+        </button>
+      </div>
       <div class="step"><span class="step-number">03</span><span>Conferir cadastro</span></div>
       <div class="step"><span class="step-number">04</span><span>Gerar PDF</span></div>
     </div>
@@ -480,9 +600,9 @@
             <div class="file-name" id="addressName" aria-live="polite">Nenhum arquivo selecionado</div>
           </div>
 
-          <button class="btn btn-secondary btn-full ocr-button" id="readBtn" type="button">
+          <button class="btn btn-secondary btn-full ocr-button" id="readBtn" type="button" disabled>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3m8 0h3a1 1 0 0 1 1 1v3m0 8v3a1 1 0 0 1-1 1h-3m-8 0H5a1 1 0 0 1-1-1v-3M8 9h8v6H8z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Ler documentos (OCR)
+            Preencher dados dos anexos
           </button>
           <p class="status" id="ocrStatus" role="status">A leitura automática é uma ajuda. Revise todos os campos antes de gerar.</p>
           <div class="note privacy-note">Privacidade: os arquivos são processados no navegador e não são enviados a um servidor. Evite computadores públicos e feche a página ao concluir.</div>
@@ -621,6 +741,18 @@
   </main>
   <footer>RV Digital · Central de Documentos · Ferramenta de apoio ao preenchimento</footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog class="install-dialog" id="installDialog" aria-labelledby="installTitle">
+    <div class="install-dialog-head">
+      <div>
+        <h2 id="installTitle">Leve a RV Digital com você</h2>
+        <p class="install-dialog-intro" id="installIntro">Adicione a central à tela inicial para abrir como um aplicativo.</p>
+      </div>
+      <button class="install-close" id="closeInstallDialog" type="button" aria-label="Fechar instruções">&times;</button>
+    </div>
+    <ol class="install-steps" id="installSteps"></ol>
+    <p class="install-dialog-note">A instalação exige que o site esteja publicado em uma conexão segura (HTTPS). Para ler documentos e gerar PDFs, mantenha acesso à internet.</p>
+    <button class="btn btn-dark install-dialog-action" id="installDialogAction" type="button">Entendi</button>
+  </dialog>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
@@ -631,7 +763,19 @@
     const val = (key) => $(`[data-key="${key}"]`)?.value?.trim() || "";
     const set = (key, value) => {
       const field = $(`[data-key="${key}"]`);
-      if (field && value && !field.value) field.value = value;
+      if (!field || !value || field.value) return false;
+      if (field instanceof HTMLSelectElement) {
+        const normalizedValue = normalizeLabel(value);
+        const option = [...field.options].find((item) => {
+          const normalizedOption = normalizeLabel(item.text);
+          return normalizedOption === normalizedValue || normalizedOption.endsWith(` ${normalizedValue}`);
+        });
+        if (!option) return false;
+        field.value = option.value;
+      } else {
+        field.value = value;
+      }
+      return true;
     };
 
     function updateProgress() {
@@ -650,6 +794,9 @@
     [["formFile", "formName"], ["idFile", "idName"], ["addressFile", "addressName"]].forEach(([inputId, labelId]) => {
       $(`#${inputId}`).addEventListener("change", (event) => {
         $(`#${labelId}`).textContent = event.target.files[0]?.name || "Nenhum arquivo selecionado";
+        const hasFiles = ["formFile", "idFile", "addressFile"].some((id) => $(`#${id}`).files.length > 0);
+        $("#readBtn").disabled = !hasFiles;
+        $("#quickFillBtn").disabled = !hasFiles;
       });
     });
 
@@ -665,67 +812,264 @@
     ]));
     $("#copyPerson").addEventListener("click", () => copyPairs([["declNome", "nome"], ["declRg", "rg"]]));
 
-    function normalize(text) { return text.replace(/\s+/g, " ").trim(); }
-    async function fileText(file) {
-      if (!file) return "";
-      if (!window.Tesseract) throw new Error("Biblioteca de OCR indisponível.");
-      if (file.type.startsWith("image/")) {
-        const result = await Tesseract.recognize(file, "por");
-        return result.data.text;
+    function normalizeLabel(text) {
+      return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR")
+        .replace(/[^a-z0-9]+/g, " ").trim().replace(/\s+/g, " ");
+    }
+
+    const fieldLabels = {
+      razao: ["razao social", "nome do estabelecimento"],
+      tipoEst: ["tipo de estabelecimento", "tipo estabelecimento", "estabelecimento"],
+      ramo: ["ramo de atividade", "atividade economica", "ramo"],
+      faturamento: ["faturamento mensal", "faturamento"],
+      ticket: ["ticket medio"],
+      endEmpresa: ["endereco do estabelecimento", "endereco comercial"],
+      numEmpresa: ["numero do estabelecimento", "numero comercial", "numero"],
+      compEmpresa: ["complemento do estabelecimento", "complemento comercial", "complemento"],
+      cepEmpresa: ["cep do estabelecimento", "cep comercial", "cep"],
+      bairroEmpresa: ["bairro do estabelecimento", "bairro comercial", "bairro"],
+      cidadeEmpresa: ["cidade do estabelecimento", "municipio do estabelecimento", "cidade comercial", "cidade"],
+      estadoEmpresa: ["estado do estabelecimento", "uf do estabelecimento", "estado comercial", "uf", "estado"],
+      emailEmpresa: ["email do estabelecimento", "email comercial", "e mail comercial", "email", "e mail"],
+      telEmpresa: ["telefone do estabelecimento", "telefone comercial", "celular comercial", "telefone"],
+      dataEmpresa: ["data de inauguracao", "data de abertura", "data pf nascimento pj inauguracao"],
+      nome: ["nome e sobrenome", "nome completo", "nome do responsavel", "responsavel legal", "nome"],
+      cpf: ["cpf", "cpf do responsavel"],
+      rg: ["rg", "rg do responsavel", "numero do rg", "identidade", "registro geral"],
+      nascResp: ["data de nascimento", "data nascimento", "nascimento"],
+      endResp: ["endereco residencial", "endereco do responsavel", "logradouro", "endereco"],
+      numResp: ["numero residencial", "numero da residencia", "numero"],
+      compResp: ["complemento residencial", "complemento"],
+      cepResp: ["cep residencial", "cep do responsavel", "cep"],
+      bairroResp: ["bairro residencial", "bairro"],
+      cidadeResp: ["municipio", "cidade"],
+      estadoResp: ["uf", "estado"],
+      telResp: ["telefone do responsavel", "celular do responsavel", "telefone pessoal"],
+      segmento: ["segmento", "codigo de atividade"],
+      tabela: ["tabela", "tabela de recebimento"],
+      tpv: ["tpv", "volume mensal"],
+      maquina: ["tipo de maquina", "modelo da maquina"],
+      qtdMaquina: ["quantidade de maquinas", "quantidade"],
+      aluguel: ["valor do aluguel", "aluguel"],
+      prazo: ["condicao", "prazo", "isencao"],
+      portador: ["nome do portador", "titular da conta", "titular"],
+      cnpj: ["cnpj"],
+      cpfBanco: ["cpf do titular", "cpf do portador"],
+      banco: ["banco"],
+      agencia: ["agencia"],
+      conta: ["conta bancaria", "numero da conta"],
+      tipoConta: ["tipo de conta"],
+      operadora: ["operadora"],
+      declNome: ["nome do declarante"],
+      declRg: ["rg do declarante", "identidade do declarante"],
+      emissaoRg: ["data de emissao do rg", "data de emissao"],
+      orgao: ["orgao expedidor", "orgao emissor"],
+      declEndereco: ["endereco residencial", "endereco do declarante", "logradouro", "endereco"],
+      declNumero: ["numero residencial", "numero da residencia", "numero"],
+      declComp: ["complemento residencial", "complemento"],
+      declBairro: ["bairro residencial", "bairro"],
+      declCidade: ["municipio", "cidade"],
+      declCep: ["cep residencial", "cep do responsavel"],
+      localAss: ["cidade da assinatura", "local da assinatura"],
+      dataAss: ["data da assinatura"]
+    };
+    const knownLabels = [...new Set(Object.values(fieldLabels).flat().map(normalizeLabel))];
+
+    function readLabeledValue(text, labels) {
+      const lines = text.split(/\r?\n/);
+      for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+        const rawLine = lines[lineIndex];
+        const line = rawLine.trim();
+        if (!line) continue;
+        const normalizedLine = normalizeLabel(line);
+        for (const label of labels.map(normalizeLabel).sort((a, b) => b.length - a.length)) {
+          if (!normalizedLine.startsWith(label)) continue;
+          const nextCharacter = normalizedLine[label.length];
+          if (nextCharacter && nextCharacter !== " " && nextCharacter !== ":") continue;
+          const longerLabelMatches = knownLabels.some((knownLabel) => (
+            knownLabel.length > label.length
+            && knownLabel.startsWith(`${label} `)
+            && normalizedLine.startsWith(knownLabel)
+          ));
+          if (longerLabelMatches) continue;
+
+          let hasPrefixCharacter = false;
+          let previousCharacterWasSeparator = false;
+          const originalOffsets = [];
+          for (let characterIndex = 0; characterIndex < line.length; characterIndex++) {
+            const characters = line[characterIndex].normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR");
+            for (const character of characters) {
+              if (/[a-z0-9]/.test(character)) {
+                hasPrefixCharacter = true;
+                previousCharacterWasSeparator = false;
+                originalOffsets.push(characterIndex);
+              } else if (hasPrefixCharacter && !previousCharacterWasSeparator) {
+                previousCharacterWasSeparator = true;
+                originalOffsets.push(characterIndex);
+              }
+            }
+          }
+          if (!originalOffsets.length) continue;
+          const valueStart = originalOffsets[label.length - 1] + 1;
+          const value = line.slice(valueStart).replace(/^[\s:./–—-]+/, "").trim();
+          const isAnotherLabel = new RegExp(
+            `^(?:${knownLabels.map((knownLabel) => knownLabel.replace(/ /g, "\\s+")).join("|")})(?:\\s|:)`,
+            "i"
+          ).test(normalizeLabel(value));
+          if (value && !isAnotherLabel) {
+            return value.slice(0, 140);
+          }
+          const followingLine = lines.slice(lineIndex + 1).find((candidate) => candidate.trim());
+          if (followingLine && !knownLabels.some((knownLabel) => {
+            const normalizedFollowing = normalizeLabel(followingLine);
+            return normalizedFollowing.startsWith(`${knownLabel} `) || normalizedFollowing.startsWith(`${knownLabel}:`);
+          })) return followingLine.trim().slice(0, 140);
+        }
       }
-      if (file.type === "application/pdf" && window.pdfjsLib) {
+      return "";
+    }
+
+    function addSuggestions(suggestions, text, keys) {
+      keys.forEach((key) => {
+        const value = readLabeledValue(text, fieldLabels[key] || []);
+        if (value) suggestions.set(key, value);
+      });
+    }
+
+    function extractDocumentSuggestions({ formText, idText, addressText }) {
+      const suggestions = new Map();
+      addSuggestions(suggestions, formText, [
+        "razao", "tipoEst", "ramo", "faturamento", "ticket", "endEmpresa", "numEmpresa",
+        "compEmpresa", "cepEmpresa", "bairroEmpresa", "cidadeEmpresa", "estadoEmpresa",
+        "emailEmpresa", "telEmpresa", "dataEmpresa", "nome", "cpf", "rg", "nascResp",
+        "segmento", "tabela", "tpv", "maquina", "qtdMaquina", "aluguel", "prazo",
+        "portador", "cnpj", "cpfBanco", "banco", "agencia", "conta", "tipoConta", "operadora"
+      ]);
+      addSuggestions(suggestions, idText, ["nome", "cpf", "rg", "nascResp", "emissaoRg", "orgao"]);
+      addSuggestions(suggestions, addressText, [
+        "endResp", "numResp", "compResp", "cepResp", "bairroResp", "cidadeResp",
+        "estadoResp", "telResp", "declEndereco", "declNumero", "declComp", "declBairro", "declCidade", "declCep"
+      ]);
+
+      const cpf = idText.match(/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/) || formText.match(/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/);
+      const cep = addressText.match(/\b\d{5}-?\d{3}\b/);
+      const rg = idText.match(/(?:RG|IDENTIDADE|REGISTRO\s+GERAL)\s*[:nº.]?\s*([0-9.\/-]{5,15})/i);
+      const email = formText.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i);
+      if (cpf) suggestions.set("cpf", cpf[0]);
+      if (cep) {
+        suggestions.set("cepResp", readLabeledValue(addressText, fieldLabels.cepResp) || cep[0]);
+        suggestions.set("declCep", readLabeledValue(addressText, fieldLabels.declCep) || cep[0]);
+      }
+      if (rg) {
+        suggestions.set("rg", rg[1]);
+        suggestions.set("declRg", rg[1]);
+      }
+      if (email) suggestions.set("emailEmpresa", email[0]);
+      const personName = suggestions.get("nome");
+      if (personName && !suggestions.has("declNome")) suggestions.set("declNome", personName);
+      return suggestions;
+    }
+
+    async function fileText(file, onProgress = () => {}) {
+      if (!file) return "";
+      const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
+      if (isPdf && window.pdfjsLib) {
         pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
         const buffer = await file.arrayBuffer();
         const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
         let output = "";
-        for (let pageNumber = 1; pageNumber <= Math.min(pdf.numPages, 3); pageNumber++) {
+        const pageCount = Math.min(pdf.numPages, 5);
+        for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
+          onProgress(pageNumber, pageCount, pdf.numPages);
           const page = await pdf.getPage(pageNumber);
+          const textContent = await page.getTextContent();
+          const rows = new Map();
+          textContent.items.forEach((item) => {
+            if (!item.str.trim()) return;
+            const row = Math.round(item.transform?.[5] || 0);
+            rows.set(row, [...(rows.get(row) || []), item.str]);
+          });
+          const pageText = [...rows.entries()]
+            .sort(([firstRow], [secondRow]) => secondRow - firstRow)
+            .map(([, row]) => row.join(" "))
+            .join("\n");
+          if (pageText.trim().length >= 20) {
+            output += `\n${pageText}`;
+            continue;
+          }
+          if (!window.Tesseract) throw new Error("Biblioteca de OCR indisponível para ler o PDF digitalizado.");
           const canvas = document.createElement("canvas");
           const viewport = page.getViewport({ scale: 1.8 });
           canvas.width = viewport.width;
           canvas.height = viewport.height;
-          await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+          const context = canvas.getContext("2d");
+          if (!context) throw new Error("Não foi possível preparar uma página do PDF para leitura.");
+          await page.render({ canvasContext: context, viewport }).promise;
           const result = await Tesseract.recognize(canvas, "por");
-          output += ` ${result.data.text}`;
+          output += `\n${result.data.text}`;
         }
         return output;
       }
-      throw new Error("Formato de arquivo não suportado para leitura.");
+      if (file.type.startsWith("image/")) {
+        if (!window.Tesseract) throw new Error("Biblioteca de OCR indisponível.");
+        const result = await Tesseract.recognize(file, "por");
+        return result.data.text;
+      }
+      throw new Error(`Não foi possível ler "${file.name}". Use um PDF, JPG ou PNG e verifique se as bibliotecas foram carregadas.`);
     }
 
-    $("#readBtn").addEventListener("click", async () => {
-      const button = $("#readBtn");
+    async function fillFromDocuments() {
+      const buttons = [$("#readBtn"), $("#quickFillBtn")];
       const status = $("#ocrStatus");
-      const files = [$("#idFile").files[0], $("#addressFile").files[0]].filter(Boolean);
+      const files = [
+        ["Ficha / formulário", $("#formFile").files[0]],
+        ["CNH / RG", $("#idFile").files[0]],
+        ["Comprovante de residência", $("#addressFile").files[0]]
+      ].filter(([, file]) => file);
       status.className = "status";
       if (!files.length) {
-        status.textContent = "Selecione uma CNH/RG ou um comprovante de residência para iniciar a leitura.";
+        status.textContent = "Anexe a ficha, um documento de identificação ou o comprovante de residência para preencher o cadastro.";
         status.classList.add("is-error");
         return;
       }
-      button.disabled = true;
-      status.textContent = "Lendo arquivos… isso pode levar alguns instantes.";
+      buttons.forEach((button) => { button.disabled = true; });
+      const originalMarkup = $("#readBtn").innerHTML;
+      $("#readBtn").textContent = "Lendo documentos…";
       try {
-        const idText = await fileText($("#idFile").files[0]);
-        const addressText = await fileText($("#addressFile").files[0]);
-        const text = normalize(`${idText} ${addressText}`);
-        const cpf = text.match(/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/);
-        const cep = text.match(/\b\d{5}-?\d{3}\b/);
-        const rg = text.match(/(?:RG|IDENTIDADE)\s*[:nº.]?\s*([0-9.\/-]{5,15})/i);
-        if (cpf) set("cpf", cpf[0]);
-        if (cep) { set("cepResp", cep[0]); set("declCep", cep[0]); }
-        if (rg) set("rg", rg[1]);
+        const extracted = { formText: "", idText: "", addressText: "" };
+        for (const [label, file] of files) {
+          const textKey = label === "Ficha / formulário" ? "formText" : label === "CNH / RG" ? "idText" : "addressText";
+          status.textContent = `Lendo ${label.toLocaleLowerCase("pt-BR")}…`;
+          extracted[textKey] = await fileText(file, (page, total, totalPages) => {
+            const pageLimitNotice = totalPages > total ? ` (primeiras ${total} de ${totalPages} páginas)` : "";
+            status.textContent = `Lendo ${label.toLocaleLowerCase("pt-BR")}, página ${page} de ${total}${pageLimitNotice}…`;
+          });
+        }
+        const suggestions = extractDocumentSuggestions(extracted);
+        let filledCount = 0;
+        suggestions.forEach((value, key) => {
+          if (set(key, value)) filledCount++;
+        });
         updateProgress();
-        status.textContent = "Leitura concluída. Alguns dados foram sugeridos; confira e complete manualmente.";
-        status.classList.add("is-success");
+        if (filledCount) {
+          status.textContent = `${filledCount} ${filledCount === 1 ? "campo preenchido" : "campos preenchidos"} com os anexos, sem substituir dados existentes. Confira os dados e complete o restante.`;
+          status.classList.add("is-success");
+        } else {
+          status.textContent = "Arquivos lidos, mas nenhum dado novo foi reconhecido. Confira o formato ou preencha manualmente.";
+          status.classList.add("is-error");
+        }
       } catch (error) {
         console.error("Falha na leitura dos documentos:", error);
-        status.textContent = "Não foi possível concluir a leitura. Verifique sua conexão e as bibliotecas ou preencha manualmente.";
+        status.textContent = `${error.message || "Não foi possível concluir a leitura."} Seus arquivos continuam apenas no navegador.`;
         status.classList.add("is-error");
       } finally {
-        button.disabled = false;
+        $("#readBtn").innerHTML = originalMarkup;
+        const hasFiles = ["formFile", "idFile", "addressFile"].some((id) => $(`#${id}`).files.length > 0);
+        buttons.forEach((button) => { button.disabled = !hasFiles; });
       }
-    });
+    }
+    $("#readBtn").addEventListener("click", fillFromDocuments);
+    $("#quickFillBtn").addEventListener("click", fillFromDocuments);
 
     let toastTimer;
     function notify(message) {
@@ -734,6 +1078,73 @@
       toast.classList.add("is-visible");
       window.clearTimeout(toastTimer);
       toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 3200);
+    }
+
+    let deferredInstallPrompt = null;
+    const installButton = $("#installButton");
+    const installDialog = $("#installDialog");
+    const installSteps = $("#installSteps");
+    const isIosDevice = /iphone|ipad|ipod/i.test(navigator.userAgent)
+      || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isAndroidDevice = /android/i.test(navigator.userAgent);
+    const isInstalled = window.matchMedia("(display-mode: standalone)").matches
+      || window.navigator.standalone === true;
+
+    function showInstallInstructions() {
+      const instructions = isIosDevice
+        ? ["Abra este site no Safari.", "Toque no botão Compartilhar do navegador.", "Selecione “Adicionar à Tela de Início” e confirme em “Adicionar”."]
+        : isAndroidDevice
+          ? ["Abra este site no Chrome ou Edge.", "Toque no menu do navegador (⋮).", "Escolha “Instalar aplicativo” ou “Adicionar à tela inicial” e confirme."]
+          : ["Abra este site em um navegador compatível.", "Acesse o menu do navegador.", "Selecione “Instalar aplicativo” ou “Instalar esta página como app”."];
+      installSteps.replaceChildren(...instructions.map((instruction) => {
+        const item = document.createElement("li");
+        item.textContent = instruction;
+        return item;
+      }));
+      if (typeof installDialog.showModal !== "function") {
+        window.alert(`${instructions.join("\n")}\n\nA instalação exige que o site esteja publicado em HTTPS.`);
+        return;
+      }
+      if (installDialog.open) installDialog.close();
+      installDialog.showModal();
+    }
+
+    installButton.addEventListener("click", async () => {
+      if (!deferredInstallPrompt || isInstalled) {
+        showInstallInstructions();
+        return;
+      }
+      deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      if (choice.outcome === "accepted") {
+        notify("Solicitação aceita. Conclua a instalação na janela do navegador.");
+      }
+    });
+    $("#closeInstallDialog").addEventListener("click", () => installDialog.close());
+    $("#installDialogAction").addEventListener("click", () => installDialog.close());
+    installDialog.addEventListener("click", (event) => {
+      if (event.target === installDialog) installDialog.close();
+    });
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+    });
+    window.addEventListener("appinstalled", () => {
+      deferredInstallPrompt = null;
+      installButton.hidden = true;
+      notify("RV Digital instalada com sucesso.");
+    });
+    if (isInstalled) installButton.hidden = true;
+
+    const isInstallableOrigin = window.location.protocol === "https:"
+      || ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
+    if ("serviceWorker" in navigator && window.isSecureContext && isInstallableOrigin) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js").catch((error) => {
+          console.warn("Não foi possível ativar o suporte offline:", error);
+        });
+      });
     }
 
     function addPdfHeader(doc, title, subtitle) {
@@ -885,6 +1296,8 @@
       fields.forEach((field) => { field.value = ""; });
       ["formFile", "idFile", "addressFile"].forEach((id) => { $(`#${id}`).value = ""; });
       ["formName", "idName", "addressName"].forEach((id) => { $(`#${id}`).textContent = "Nenhum arquivo selecionado"; });
+      $("#readBtn").disabled = true;
+      $("#quickFillBtn").disabled = true;
       $("#includeDecl").checked = true;
       $("#ocrStatus").textContent = "Formulário limpo. Selecione documentos para começar.";
       $("#ocrStatus").className = "status";
