@@ -1,12 +1,14 @@
 const CACHE_PREFIX = "rv-digital-pwa-";
-const CACHE_NAME = `${CACHE_PREFIX}v2`;
+const CACHE_NAME = `${CACHE_PREFIX}v3`;
 const APP_SHELL = [
   "./index.html",
   "./manifest.webmanifest",
   "./icons/rv-digital.svg",
   "./icons/rv-digital-192.png",
   "./icons/rv-digital-512.png",
-  "./icons/apple-touch-icon.png"
+  "./icons/apple-touch-icon.png",
+  "./modelos/declaracao-residencia-1.pdf",
+  "./modelos/declaracao-residencia-2.pdf"
 ];
 
 async function cacheResponse(request, response) {
