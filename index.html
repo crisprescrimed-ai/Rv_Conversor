@@ -1084,50 +1084,57 @@
       const document = await loadPdfTemplate("./modelos/declaracao-residencia-1.pdf");
       const page = document.getPage(0);
       const font = await document.embedFont(PDFLib.StandardFonts.Helvetica);
-      const size = 9;
-      const startX = 106;
-      const at = (prefix) => startX + font.widthOfTextAtSize(prefix, size);
       const fallback = (primary, secondary) => readValue(primary) || readValue(secondary);
-      const identityPrefix = "Portador (a) da Carteira de Identidade n.º ";
-      const identityDatePrefix = `${identityPrefix}___________________ emitida em `;
-      const issuerPrefix = "órgão expedidor ";
-      const cpfPrefix = "órgão expedidor _________________________, CPF n.º ";
-      const addressPrefix = "a RV Tecnologia e Sistemas S/A que resido na ";
-      const houseNumberPrefix = "____________________________n.º ";
-      const complementPrefix = "____________________________n.º ________________ Complemento";
-      const neighborhoodCityPrefix = "bairro __________________________no município ";
-      const signatureDatePrefix = "______________________________, ";
+      const drawField = (label, value, x, y, width) => {
+        const text = String(value || "").replace(/\s+/g, " ").trim();
+        if (!text) return;
+        let size = 9;
+        while (size > 6 && font.widthOfTextAtSize(text, size) > width) size -= 0.5;
+        if (font.widthOfTextAtSize(text, size) > width) {
+          throw new Error(`O campo "${label}" é muito longo para a declaração de residência. Abrevie o conteúdo e tente novamente.`);
+        }
+        page.drawText(text, { x, y: y + 1, size, font, color: PDFLib.rgb(0.12, 0.18, 0.27) });
+      };
+      const parseDate = (label, value) => {
+        if (!value) return null;
+        const local = value.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
+        const iso = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (!local && !iso) throw new Error(`Informe ${label} no formato DD/MM/AAAA.`);
+        const [day, month, year] = local ? local.slice(1) : [iso[3], iso[2], iso[1]];
+        const date = new Date(Number(year), Number(month) - 1, Number(day));
+        if (date.getFullYear() !== Number(year) || date.getMonth() !== Number(month) - 1 || date.getDate() !== Number(day)) {
+          throw new Error(`Informe uma data válida para ${label}.`);
+        }
+        return { day: day.padStart(2, "0"), month: month.padStart(2, "0"), year };
+      };
 
-      drawTemplateField(page, font, fallback("declNome", "nome"), at("Eu, "), 583, 385, size);
-      drawTemplateField(page, font, fallback("declRg", "rg"), at(identityPrefix), 549, 66, size);
-      drawTemplateField(page, font, readValue("emissaoRg"), at(identityDatePrefix), 549, 76, size);
-      drawTemplateField(page, font, readValue("orgao"), at(issuerPrefix), 515, 118, size);
-      drawTemplateField(page, font, readValue("cpf"), at(cpfPrefix), 515, 151, size);
-      drawTemplateField(page, font, fallback("declEndereco", "endResp"), at(addressPrefix), 464, 255, size);
-      drawTemplateField(page, font, fallback("declNumero", "numResp"), at(houseNumberPrefix), 431, 72, size);
-      drawTemplateField(page, font, fallback("declComp", "compResp"), at(complementPrefix), 431, 167, size);
-      drawTemplateField(page, font, fallback("declBairro", "bairroResp"), at("bairro "), 397, 131, size);
-      drawTemplateField(page, font, fallback("declCidade", "cidadeResp"), at(neighborhoodCityPrefix), 397, 207, size);
-      drawTemplateField(page, font, fallback("declCep", "cepResp"), at("cujo CEP é "), 363, 136, size);
+      drawField("nome", fallback("declNome", "nome"), 123, 582.84, 363);
+      drawField("RG", fallback("declRg", "rg"), 285, 549, 93);
+      drawField("órgão expedidor", readValue("orgao"), 177, 515.16, 123);
+      drawField("CPF", readValue("cpf"), 344, 515.16, 143);
+      drawField("endereço", fallback("declEndereco", "endResp"), 301, 464.4, 199);
+      drawField("número", fallback("declNumero", "numResp"), 268, 430.56, 75);
+      drawField("complemento", fallback("declComp", "compResp"), 409, 430.56, 80);
+      drawField("bairro", fallback("declBairro", "bairroResp"), 135, 396.72, 127);
+      drawField("município", fallback("declCidade", "cidadeResp"), 323, 396.72, 167);
+      drawField("CEP", fallback("declCep", "cepResp"), 154, 362.88, 77);
+      drawField("cidade da assinatura", readValue("localAss"), 144, 289.56, 148);
 
-      drawTemplateField(page, font, readValue("localAss"), 141, 289.6, 148, size);
-      const signatureDate = readValue("dataAss");
-      const numericDate = signatureDate.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{4})$/);
-      const isoDate = signatureDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-      if (numericDate) {
-        const [day, month, year] = numericDate.slice(1);
-        const dateX = (prefix) => 141 + font.widthOfTextAtSize(prefix, size);
-        drawTemplateField(page, font, day, dateX(signatureDatePrefix), 289.6, 25, size);
-        drawTemplateField(page, font, month, dateX(`${signatureDatePrefix}____ de `), 289.6, 105, size);
-        drawTemplateField(page, font, year, dateX(`${signatureDatePrefix}____ de _____________________ de `), 289.6, 32, size);
-      } else if (isoDate) {
-        const [, year, month, day] = isoDate;
-        const dateX = (prefix) => 141 + font.widthOfTextAtSize(prefix, size);
-        drawTemplateField(page, font, day, dateX(signatureDatePrefix), 289.6, 25, size);
-        drawTemplateField(page, font, month, dateX(`${signatureDatePrefix}____ de `), 289.6, 105, size);
-        drawTemplateField(page, font, year, dateX(`${signatureDatePrefix}____ de _____________________ de `), 289.6, 32, size);
-      } else {
-        drawTemplateField(page, font, signatureDate, 290, 289.6, 210, size);
+      const issueDate = parseDate("a data de emissão do RG", readValue("emissaoRg"));
+      if (issueDate) {
+        drawField("dia de emissão", issueDate.day, 436, 549, 18);
+        drawField("mês de emissão", issueDate.month, 461, 549, 18);
+        drawField("ano de emissão", issueDate.year, 485, 549, 18);
+      }
+
+      const signatureDate = parseDate("a data da assinatura", readValue("dataAss"));
+      if (signatureDate) {
+        const months = ["janeiro", "fevereiro", "março", "abril", "maio", "junho",
+          "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
+        drawField("dia da assinatura", signatureDate.day, 303, 289.56, 26);
+        drawField("mês da assinatura", months[Number(signatureDate.month) - 1], 349, 289.56, 102);
+        page.drawRectangle({ x: 467, y: 287, width: 39, height: 13, color: PDFLib.rgb(1, 1, 1) });
+        drawField("ano da assinatura", signatureDate.year, 470, 289.56, 34);
       }
 
       return document.save();
@@ -1264,7 +1271,7 @@
         if (previewed) notify("Os documentos foram gerados. Confira cada pré-visualização antes de baixar.");
       } catch (error) {
         console.error("Falha ao gerar os documentos PDF:", error);
-        notify(`${error.message || "Não foi possível gerar os documentos."} Verifique sua conexão e tente novamente.`);
+        notify(error.message || "Não foi possível gerar os documentos. Verifique sua conexão e tente novamente.");
       } finally {
         fields.forEach((field) => { field.disabled = false; });
         button.disabled = false;
